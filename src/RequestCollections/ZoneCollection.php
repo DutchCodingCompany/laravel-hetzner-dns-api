@@ -3,6 +3,7 @@
 namespace DutchCodingCompany\HetznerDnsClient\RequestCollections;
 
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
+use DutchCodingCompany\HetznerDnsClient\Objects\Zones;
 use DutchCodingCompany\HetznerDnsClient\Requests\Zones\CreateZone;
 use DutchCodingCompany\HetznerDnsClient\Requests\Zones\DeleteZone;
 use DutchCodingCompany\HetznerDnsClient\Requests\Zones\ExportZone;
@@ -13,33 +14,33 @@ use Sammyjo20\Saloon\Http\RequestCollection;
 
 class ZoneCollection extends RequestCollection
 {
-    public function all(...$arguments): array
+    public function all(string $name = null,?int $per_page = null, ?string $search_name = null): Zones
     {
-        return $this->connector->request(new ListZones(...$arguments))->send()->throw()->dto();
+        return $this->connector->request(new ListZones(name: $name, per_page: $per_page, search_name: $search_name))->send()->throw()->dto();
     }
 
-    public function create(...$arguments): array
+    public function create(string $name, ?int $ttl = null): Zone
     {
-        return $this->connector->request(new CreateZone(...$arguments))->send()->throw()->json();
+        return $this->connector->request(new CreateZone(name: $name, ttl: $ttl))->send()->throw()->dto();
     }
 
-    public function get(...$arguments): ?Zone
+    public function get(string $zone_id): Zone
     {
-        return $this->connector->request(new GetZone(...$arguments))->send()->throw()->dto();
+        return $this->connector->request(new GetZone(zone_id: $zone_id))->send()->throw()->dto();
     }
 
-    public function update(...$arguments): array
+    public function update(string $zone_id, string $name, ?int $ttl = null): Zone
     {
-        return $this->connector->request(new UpdateZone(...$arguments))->send()->throw()->json();
+        return $this->connector->request(new UpdateZone(zone_id: $zone_id, name: $name, ttl: $ttl))->send()->throw()->dto();
     }
 
-    public function delete(...$arguments): array
+    public function delete(string $zone_id): void
     {
-        return $this->connector->request(new DeleteZone(...$arguments))->send()->throw()->json();
+        $this->connector->request(new DeleteZone(zone_id: $zone_id))->send()->throw();
     }
 
-    public function export(...$arguments): array
+    public function export(string $zone_id): string
     {
-        return $this->connector->request(new ExportZone(...$arguments))->send()->throw()->json();
+        return $this->connector->request(new ExportZone(zone_id: $zone_id))->send()->throw()->body();
     }
 }

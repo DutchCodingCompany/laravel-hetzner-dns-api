@@ -4,13 +4,16 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
+use DutchCodingCompany\HetznerDnsClient\Objects\BulkCreatedRecords;
 use Sammyjo20\Saloon\Constants\Saloon;
 use Sammyjo20\Saloon\Http\SaloonRequest;
+use Sammyjo20\Saloon\Http\SaloonResponse;
+use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
 use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
 
 class BulkCreateRecords extends SaloonRequest
 {
-    use HasJsonBody;
+    use HasJsonBody, CastsToDto;
 
     protected array $records;
 
@@ -36,5 +39,10 @@ class BulkCreateRecords extends SaloonRequest
         return array_filter([
             'records' => $this->records,
         ]);
+    }
+
+    protected function castToDto(SaloonResponse $response): BulkCreatedRecords
+    {
+        return new BulkCreatedRecords($response->json());
     }
 }

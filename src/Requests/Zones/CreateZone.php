@@ -39,6 +39,6 @@ class CreateZone extends SaloonRequest
 
     protected function castToDto(SaloonResponse $response): Zone
     {
-        dd($response->json());
+        return new Zone($response->json('zone'));
     }
 }

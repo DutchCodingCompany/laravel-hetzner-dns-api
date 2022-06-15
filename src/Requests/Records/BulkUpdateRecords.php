@@ -3,14 +3,17 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
+use DutchCodingCompany\HetznerDnsClient\Objects\BulkUpdatedRecords;
 use Illuminate\Support\Arr;
 use Sammyjo20\Saloon\Constants\Saloon;
 use Sammyjo20\Saloon\Http\SaloonRequest;
+use Sammyjo20\Saloon\Http\SaloonResponse;
+use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
 use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
 
 class BulkUpdateRecords extends SaloonRequest
 {
-    use HasJsonBody;
+    use HasJsonBody, CastsToDto;
 
     protected array $records;
 
@@ -39,5 +42,10 @@ class BulkUpdateRecords extends SaloonRequest
         return array_filter([
             'records' => $this->records,
         ]);
+    }
+
+    protected function castToDto(SaloonResponse $response): BulkUpdatedRecords
+    {
+        return new BulkUpdatedRecords($response->json());
     }
 }

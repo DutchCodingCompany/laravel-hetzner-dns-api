@@ -4,13 +4,16 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
+use DutchCodingCompany\HetznerDnsClient\Objects\Record;
 use Sammyjo20\Saloon\Constants\Saloon;
 use Sammyjo20\Saloon\Http\SaloonRequest;
+use Sammyjo20\Saloon\Http\SaloonResponse;
+use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
 use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
 
 class CreateRecord extends SaloonRequest
 {
-    use HasJsonBody;
+    use HasJsonBody, CastsToDto;
 
     public function __construct(
         protected string $zone_id,
@@ -40,5 +43,10 @@ class CreateRecord extends SaloonRequest
             'value' => $this->value,
             'ttl' => $this->ttl,
         ]);
+    }
+
+    protected function castToDto(SaloonResponse $response): Record
+    {
+        return new Record($response->json('record'));
     }
 }

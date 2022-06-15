@@ -3,7 +3,7 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
-use DutchCodingCompany\HetznerDnsClient\Objects\ZoneCollection;
+use DutchCodingCompany\HetznerDnsClient\Objects\Zones;
 use Illuminate\Support\Arr;
 use Sammyjo20\Saloon\Constants\Saloon;
 use Sammyjo20\Saloon\Http\SaloonRequest;
@@ -41,9 +41,8 @@ class ListZones extends SaloonRequest
         ]);
     }
 
-    protected function castToDto(SaloonResponse $response): mixed
+    protected function castToDto(SaloonResponse $response): Zones
     {
-
-         dd(new ZoneCollection($response->json()));
+         return new Zones($response->json());
     }
 }
