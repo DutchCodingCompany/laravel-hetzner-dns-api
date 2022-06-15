@@ -1,0 +1,68 @@
+{
+    "name": "dutchcodingcompany/laravel-hetzner-dns-api",
+    "description": "An unofficial PHP SDK for the Hetzner DNS API.",
+    "keywords": [
+        "dutchcodingcompany",
+        "laravel",
+        "laravel-hetzner-dns-api"
+    ],
+    "homepage": "https://github.com/dutchcodingcompany/laravel-hetzner-dns-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Niek Brekelmans",
+            "email": "niek@dcc.team",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/contracts": "^8.0|^9.0",
+        "spatie/laravel-package-tools": "^1.9.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "DutchCodingCompany\\HetznerDnsClient\\": "src",
+            "DutchCodingCompany\\HetznerDnsClient\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DutchCodingCompany\\HetznerDnsClient\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/phpunit",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DutchCodingCompany\\HetznerDnsClient\\HetznerDnsClientServiceProvider"
+            ],
+            "aliases": {
+                "HetznerDnsClient": "DutchCodingCompany\\HetznerDnsClient\\Facades\\HetznerDnsClient"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
