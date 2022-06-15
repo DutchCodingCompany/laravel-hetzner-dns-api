@@ -15,36 +15,36 @@ class RecordCollection extends RequestCollection
 {
     public function all(...$arguments): array
     {
-        return $this->connector->request(new ListRecords(...$arguments))->send()->json();
+        return $this->connector->request(new ListRecords(...$arguments))->send()->throw()->json();
     }
 
     public function create(...$arguments): array
     {
-        return $this->connector->request(new CreateRecord(...$arguments))->send()->json();
+        return $this->connector->request(new CreateRecord(...$arguments))->send()->throw()->json();
     }
 
     public function get(...$arguments): array
     {
-        return $this->connector->request(new GetRecord(...$arguments))->send()->json();
+        return $this->connector->request(new GetRecord(...$arguments))->send()->throw()->json();
     }
 
     public function update(...$arguments): array
     {
-        return $this->connector->request(new UpdateRecord(...$arguments))->send()->json();
+        return $this->connector->request(new UpdateRecord(...$arguments))->send()->throw()->json();
     }
 
     public function delete(...$arguments): array
     {
-        return $this->connector->request(new DeleteRecord(...$arguments))->send()->json();
+        return $this->connector->request(new DeleteRecord(...$arguments))->send()->throw()->json();
     }
 
     public function bulkCreate(...$arguments): array
     {
-        return $this->connector->request(new BulkCreateRecords(...$arguments))->send()->json();
+        return $this->connector->request(new BulkCreateRecords(...$arguments))->send()->throw()->json();
     }
 
     public function bulkUpdate(...$arguments): array
     {
-        return $this->connector->request(new BulkUpdateRecords(...$arguments))->send()->json();
+        return $this->connector->request(new BulkUpdateRecords(...$arguments))->send()->throw()->json();
     }
 }

@@ -3,12 +3,17 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
+use DutchCodingCompany\HetznerDnsClient\Objects\ZoneCollection;
 use Illuminate\Support\Arr;
 use Sammyjo20\Saloon\Constants\Saloon;
 use Sammyjo20\Saloon\Http\SaloonRequest;
+use Sammyjo20\Saloon\Http\SaloonResponse;
+use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
 
 class ListZones extends SaloonRequest
 {
+    use CastsToDto;
+
     public function __construct(
         protected ?string $name = null,
         protected ?int $page = null,
@@ -34,5 +39,11 @@ class ListZones extends SaloonRequest
             'per_page' => $this->per_page,
             'search_name' => $this->search_name,
         ]);
+    }
+
+    protected function castToDto(SaloonResponse $response): mixed
+    {
+
+         dd(new ZoneCollection($response->json()));
     }
 }

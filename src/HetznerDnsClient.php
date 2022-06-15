@@ -5,6 +5,10 @@ namespace DutchCodingCompany\HetznerDnsClient;
 use Sammyjo20\Saloon\Http\SaloonConnector;
 use Sammyjo20\Saloon\Traits\Plugins\AcceptsJson;
 
+/**
+ * @method RequestCollections\ZoneCollection zones()
+ * @method RequestCollections\RecordCollection records()
+ */
 class HetznerDnsClient extends SaloonConnector
 {
     use AcceptsJson;
