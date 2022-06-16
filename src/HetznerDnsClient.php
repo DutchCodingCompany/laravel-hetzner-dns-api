@@ -2,9 +2,9 @@
 
 namespace DutchCodingCompany\HetznerDnsClient;
 
+use DutchCodingCompany\HetznerDnsClient\Traits\ThrowsOnErrorsExceptNotFound;
 use Sammyjo20\Saloon\Http\SaloonConnector;
 use Sammyjo20\Saloon\Traits\Plugins\AcceptsJson;
-use Sammyjo20\Saloon\Traits\Plugins\AlwaysThrowsOnErrors;
 
 /**
  * @method RequestCollections\ZoneCollection zones()
@@ -12,7 +12,7 @@ use Sammyjo20\Saloon\Traits\Plugins\AlwaysThrowsOnErrors;
  */
 class HetznerDnsClient extends SaloonConnector
 {
-    use AcceptsJson, AlwaysThrowsOnErrors;
+    use AcceptsJson, ThrowsOnErrorsExceptNotFound;
     use Traits\ResolvesApiToken;
 
     protected array $requests = [

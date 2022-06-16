@@ -22,8 +22,7 @@ class CreateRecord extends SaloonRequest
         protected string $name,
         protected string $value,
         protected ?int $ttl = null,
-    )
-    {}
+    ) {}
 
     protected ?string $connector = HetznerDnsClient::class;
 

@@ -18,7 +18,7 @@ use Sammyjo20\Saloon\Http\RequestCollection;
 
 class RecordCollection extends RequestCollection
 {
-    public function all(?int $page = null, ?int $per_page = null, ?string $zone_id = null): Records
+    public function all(?int $page = null, ?int $per_page = null, ?string $zone_id = null): ?Records
     {
         return $this->connector->request(new ListRecords(page: $page, per_page: $per_page, zone_id: $zone_id))->send()->dto();
     }
@@ -26,6 +26,21 @@ class RecordCollection extends RequestCollection
     public function create(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
         return $this->connector->request(new CreateRecord(zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->dto();
+    }
+
+    public function createIfNotExists(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
+    {
+        $records = $this->all(zone_id: $zone_id);
+        $record = collect($records->records)
+            ->where('name', $name)
+            ->filter(fn (Record $record) => $record->type->value === $type->value)
+            ->first();
+
+        if (! is_null($record)) {
+            return $record; // already exists
+        }
+
+        return $this->create($zone_id, $type, $name, $value, $ttl);
     }
 
     public function get(string $record_id): Record

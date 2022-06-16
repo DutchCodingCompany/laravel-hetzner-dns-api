@@ -14,7 +14,7 @@ use Sammyjo20\Saloon\Http\RequestCollection;
 
 class ZoneCollection extends RequestCollection
 {
-    public function all(string $name = null,?int $per_page = null, ?string $search_name = null): Zones
+    public function all(string $name = null,?int $per_page = null, ?string $search_name = null): ?Zones
     {
         return $this->connector->request(new ListZones(name: $name, per_page: $per_page, search_name: $search_name))->send()->dto();
     }
@@ -24,9 +24,17 @@ class ZoneCollection extends RequestCollection
         return $this->connector->request(new CreateZone(name: $name, ttl: $ttl))->send()->dto();
     }
 
-    public function get(string $zone_id): Zone
+    public function get(string $zone_id): ?Zone
     {
         return $this->connector->request(new GetZone(zone_id: $zone_id))->send()->dto();
+    }
+
+    public function getByName(string $name): ?Zone
+    {
+        $zones = $this->all(name: $name);
+
+        /** @var Zone $zone */
+        return collect($zones?->zones)->where('name', $name)->first();
     }
 
     public function update(string $zone_id, string $name, ?int $ttl = null): Zone
