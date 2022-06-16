@@ -20,8 +20,9 @@ class UpdateZone extends SaloonRequest
 
         protected string $name,
         protected ?int $ttl = null,
-    )
-    {}
+    ) {
+        $this->ttl ??= config('hetzner-dns.default_ttl');
+    }
 
     protected ?string $connector = HetznerDnsClient::class;
 
