@@ -20,36 +20,36 @@ class RecordCollection extends RequestCollection
 {
     public function all(?int $page = null, ?int $per_page = null, ?string $zone_id = null): Records
     {
-        return $this->connector->request(new ListRecords(page: $page, per_page: $per_page, zone_id: $zone_id))->send()->throw()->dto();
+        return $this->connector->request(new ListRecords(page: $page, per_page: $per_page, zone_id: $zone_id))->send()->dto();
     }
 
     public function create(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
-        return $this->connector->request(new CreateRecord(zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->throw()->dto();
+        return $this->connector->request(new CreateRecord(zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->dto();
     }
 
     public function get(string $record_id): Record
     {
-        return $this->connector->request(new GetRecord(record_id: $record_id))->send()->throw()->dto();
+        return $this->connector->request(new GetRecord(record_id: $record_id))->send()->dto();
     }
 
     public function update(string $record_id, string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
-        return $this->connector->request(new UpdateRecord(record_id: $record_id, zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->throw()->dto();
+        return $this->connector->request(new UpdateRecord(record_id: $record_id, zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->dto();
     }
 
     public function delete(string $record_id): void
     {
-        $this->connector->request(new DeleteRecord($record_id))->send()->throw();
+        $this->connector->request(new DeleteRecord($record_id))->send();
     }
 
     public function bulkCreate(array $records): BulkCreatedRecords
     {
-        return $this->connector->request(new BulkCreateRecords($records))->send()->throw()->dto();
+        return $this->connector->request(new BulkCreateRecords($records))->send()->dto();
     }
 
     public function bulkUpdate(array $records): BulkUpdatedRecords
     {
-        return $this->connector->request(new BulkUpdateRecords($records))->send()->throw()->dto();
+        return $this->connector->request(new BulkUpdateRecords($records))->send()->dto();
     }
 }
