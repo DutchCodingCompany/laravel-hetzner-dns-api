@@ -4,10 +4,16 @@ namespace DutchCodingCompany\HetznerDnsClient;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use DutchCodingCompany\HetznerDnsClient\Commands\HetznerDnsClientCommand;
+use Illuminate\Contracts\Container\Container;
 
 class HetznerDnsClientServiceProvider extends PackageServiceProvider
 {
+    public function packageRegistered()
+    {
+        $this->app->singleton(HetznerDnsClient::class);
+        $this->app->alias(HetznerDnsClient::class, 'hetnzer-dns-client');
+    }
+
     public function configurePackage(Package $package): void
     {
         /*
@@ -17,9 +23,6 @@ class HetznerDnsClientServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-hetzner-dns-api')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-hetzner-dns-api_table')
-            ->hasCommand(HetznerDnsClientCommand::class);
+            ->hasConfigFile('hetzner-dns');
     }
 }
