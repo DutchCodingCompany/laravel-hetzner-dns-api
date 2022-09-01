@@ -7,6 +7,7 @@ use DutchCodingCompany\HetznerDnsClient\Objects\BulkCreatedRecords;
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkUpdatedRecords;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
 use DutchCodingCompany\HetznerDnsClient\Objects\Records;
+use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\BulkCreateRecords;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\BulkUpdateRecords;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\CreateRecord;
@@ -26,6 +27,17 @@ class RecordCollection extends RequestCollection
     public function create(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
         return $this->connector->request(new CreateRecord(zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->dto();
+    }
+
+    public function createNameserverRecords(string $zone_id)
+    {
+        $records = [];
+        $nameservers = array_filter(config('hetzner-dns.nameservers', []));
+        foreach ($nameservers as $nameserver) {
+            $records[] = $this->create($zone_id, RecordType::NS(), '@', $nameserver);
+        }
+
+        return new Records(records: $records);
     }
 
     public function createIfNotExists(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
