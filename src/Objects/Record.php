@@ -12,4 +12,5 @@ class Record extends BaseRecord
     public string $id;
     public Carbon $created;
     public Carbon $modified;
+    public int $ttl;
 }

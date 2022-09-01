@@ -55,6 +55,25 @@ class RecordCollection extends RequestCollection
         return $this->create($zone_id, $type, $name, $value, $ttl);
     }
 
+    public function createOrUpdate(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
+    {
+        $records = $this->all(zone_id: $zone_id);
+        $record = collect($records->records)
+            ->where('name', $name)
+            ->filter(fn (Record $record) => $record->type->value === $type->value)
+            ->first();
+
+        if (! is_null($record)) {
+            // already exists, update if changed
+            if ($value !== $record->value || $ttl !== $record->ttl) {
+                $record = $this->update($record->id, $zone_id, $type, $name, $value, $ttl);
+            }
+            return $record;
+        }
+
+        return $this->create($zone_id, $type, $name, $value, $ttl);
+    }
+
     public function get(string $record_id): Record
     {
         return $this->connector->request(new GetRecord(record_id: $record_id))->send()->dto();
