@@ -28,6 +28,17 @@ class RecordCollection extends RequestCollection
         return $this->connector->request(new CreateRecord(zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->send()->dto();
     }
 
+    public function createNameserverRecords(string $zone_id)
+    {
+        $records = [];
+        $nameservers = array_filter(config('hetzner-dns.nameservers', []));
+        foreach ($nameservers as $nameserver) {
+            $records[] = $this->create($zone_id, RecordType::NS(), '@', $nameserver);
+        }
+
+        return new Records(records: $records);
+    }
+
     public function createIfNotExists(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
         $records = $this->all(zone_id: $zone_id);
@@ -38,6 +49,25 @@ class RecordCollection extends RequestCollection
 
         if (! is_null($record)) {
             return $record; // already exists
+        }
+
+        return $this->create($zone_id, $type, $name, $value, $ttl);
+    }
+
+    public function createOrUpdate(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
+    {
+        $records = $this->all(zone_id: $zone_id);
+        $record = collect($records->records)
+            ->where('name', $name)
+            ->filter(fn (Record $record) => $record->type->value === $type->value)
+            ->first();
+
+        if (! is_null($record)) {
+            // already exists, update if changed
+            if ($value !== $record->value || $ttl !== $record->ttl) {
+                $record = $this->update($record->id, $zone_id, $type, $name, $value, $ttl);
+            }
+            return $record;
         }
 
         return $this->create($zone_id, $type, $name, $value, $ttl);
