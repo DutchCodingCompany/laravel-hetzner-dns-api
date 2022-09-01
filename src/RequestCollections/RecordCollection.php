@@ -7,7 +7,6 @@ use DutchCodingCompany\HetznerDnsClient\Objects\BulkCreatedRecords;
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkUpdatedRecords;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
 use DutchCodingCompany\HetznerDnsClient\Objects\Records;
-use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\BulkCreateRecords;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\BulkUpdateRecords;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\CreateRecord;
