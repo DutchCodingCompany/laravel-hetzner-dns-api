@@ -88,6 +88,23 @@ class RecordCollection extends RequestCollection
         $this->connector->request(new DeleteRecord($record_id))->send();
     }
 
+    public function deleteIfExists(string $zone_id, RecordType $type, string $name): bool
+    {
+        $records = $this->all(zone_id: $zone_id);
+        $record = collect($records->records)
+            ->where('name', $name)
+            ->filter(fn (Record $record) => $record->type->value === $type->value)
+            ->first();
+
+        if (! is_null($record)) {
+            $this->delete($record->id);
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function bulkCreate(array $records): BulkCreatedRecords
     {
         return $this->connector->request(new BulkCreateRecords($records))->send()->dto();
