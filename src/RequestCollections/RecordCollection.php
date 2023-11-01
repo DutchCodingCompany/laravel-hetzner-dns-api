@@ -33,7 +33,7 @@ class RecordCollection extends RequestCollection
         $records = [];
         $nameservers = array_filter(config('hetzner-dns.nameservers', []));
         foreach ($nameservers as $nameserver) {
-            $records[] = $this->create($zone_id, RecordType::NS(), '@', $nameserver);
+            $records[] = $this->create($zone_id, RecordType::NS, '@', $nameserver);
         }
 
         return new Records(records: $records);
@@ -43,9 +43,7 @@ class RecordCollection extends RequestCollection
     {
         $records = $this->all(zone_id: $zone_id);
         $record = collect($records->records)
-            ->where('name', $name)
-            ->filter(fn (Record $record) => $record->type->value === $type->value)
-            ->first();
+            ->firstWhere(fn (Record $record) => $record->name === $name && $record->type === $type);
 
         if (! is_null($record)) {
             return $record; // already exists
@@ -58,9 +56,7 @@ class RecordCollection extends RequestCollection
     {
         $records = $this->all(zone_id: $zone_id);
         $record = collect($records->records)
-            ->where('name', $name)
-            ->filter(fn (Record $record) => $record->type->value === $type->value)
-            ->first();
+            ->firstWhere(fn (Record $record) => $record->name === $name && $record->type === $type);
 
         if (! is_null($record)) {
             // already exists, update if changed
@@ -92,9 +88,7 @@ class RecordCollection extends RequestCollection
     {
         $records = $this->all(zone_id: $zone_id);
         $record = collect($records->records)
-            ->where('name', $name)
-            ->filter(fn (Record $record) => $record->type->value === $type->value)
-            ->first();
+            ->firstWhere(fn (Record $record) => $record->name === $name && $record->type === $type);
 
         if (! is_null($record)) {
             $this->delete($record->id);
