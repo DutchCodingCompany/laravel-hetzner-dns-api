@@ -3,14 +3,14 @@
 namespace DutchCodingCompany\HetznerDnsClient;
 
 use DutchCodingCompany\HetznerDnsClient\Traits\ThrowsOnErrorsExceptNotFound;
-use Sammyjo20\Saloon\Http\SaloonConnector;
-use Sammyjo20\Saloon\Traits\Plugins\AcceptsJson;
+use Saloon\Http\Connector;
+use Saloon\Traits\Plugins\AcceptsJson;
 
 /**
  * @method RequestCollections\ZoneCollection zones()
  * @method RequestCollections\RecordCollection records()
  */
-class HetznerDnsClient extends SaloonConnector
+class HetznerDnsClient extends Connector
 {
     use AcceptsJson, ThrowsOnErrorsExceptNotFound;
     use Traits\ResolvesApiToken;
@@ -25,7 +25,7 @@ class HetznerDnsClient extends SaloonConnector
      *
      * @return string
      */
-    public function defineBaseUrl(): string
+    public function resolveBaseUrl(): string
     {
         return 'https://dns.hetzner.com/api/v1';
     }

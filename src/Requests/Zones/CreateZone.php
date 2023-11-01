@@ -4,13 +4,12 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
-use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Traits\Plugins\CastsToDto;
+use Saloon\Traits\Body\HasJsonBody;;
 
-class CreateZone extends SaloonRequest
+class CreateZone extends Request
 {
     use HasJsonBody, CastsToDto;
 
@@ -23,14 +22,14 @@ class CreateZone extends SaloonRequest
 
     protected ?string $connector = HetznerDnsClient::class;
 
-    protected ?string $method = Saloon::POST;
+    protected Method $method = Method::POST;
 
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/zones';
     }
 
-    public function defaultData(): array
+    public function defaultBody(): array
     {
         return array_filter([
             'name' => $this->name,
@@ -38,7 +37,7 @@ class CreateZone extends SaloonRequest
         ]);
     }
 
-    protected function castToDto(SaloonResponse $response): Zone
+    protected function castToDto(Response $response): Zone
     {
         return new Zone($response->json('zone'));
     }

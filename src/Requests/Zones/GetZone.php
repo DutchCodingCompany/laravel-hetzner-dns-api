@@ -4,13 +4,11 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Traits\Plugins\CastsToDto;
 
-class GetZone extends SaloonRequest
+class GetZone extends Request
 {
     use CastsToDto;
 
@@ -21,14 +19,14 @@ class GetZone extends SaloonRequest
 
     protected ?string $connector = HetznerDnsClient::class;
 
-    protected ?string $method = Saloon::GET;
+    protected Method $method = Method::GET;
 
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/zones/'.$this->zone_id;
     }
 
-    protected function castToDto(SaloonResponse $response): Zone
+    protected function castToDto(Response $response): Zone
     {
         return new Zone($response->json('zone'));
     }

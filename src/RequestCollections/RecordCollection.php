@@ -14,7 +14,7 @@ use DutchCodingCompany\HetznerDnsClient\Requests\Records\DeleteRecord;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\GetRecord;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\ListRecords;
 use DutchCodingCompany\HetznerDnsClient\Requests\Records\UpdateRecord;
-use Sammyjo20\Saloon\Http\RequestCollection;
+use Saloon\Http\RequestCollection;
 
 class RecordCollection extends RequestCollection
 {

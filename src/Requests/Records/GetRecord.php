@@ -4,13 +4,11 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Traits\Plugins\CastsToDto;
 
-class GetRecord extends SaloonRequest
+class GetRecord extends Request
 {
     use CastsToDto;
 
@@ -21,14 +19,14 @@ class GetRecord extends SaloonRequest
 
     protected ?string $connector = HetznerDnsClient::class;
 
-    protected ?string $method = Saloon::GET;
+    protected Method $method = Method::GET;
 
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/records/'.$this->record_id;
     }
 
-    protected function castToDto(SaloonResponse $response): Record
+    protected function castToDto(Response $response): Record
     {
         return new Record($response->json('record'));
     }

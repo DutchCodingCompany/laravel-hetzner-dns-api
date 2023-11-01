@@ -10,7 +10,7 @@ use DutchCodingCompany\HetznerDnsClient\Requests\Zones\ExportZone;
 use DutchCodingCompany\HetznerDnsClient\Requests\Zones\GetZone;
 use DutchCodingCompany\HetznerDnsClient\Requests\Zones\ListZones;
 use DutchCodingCompany\HetznerDnsClient\Requests\Zones\UpdateZone;
-use Sammyjo20\Saloon\Http\RequestCollection;
+use Saloon\Http\RequestCollection;
 
 class ZoneCollection extends RequestCollection
 {

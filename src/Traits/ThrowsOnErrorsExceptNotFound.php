@@ -2,26 +2,25 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Traits;
 
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\AlwaysThrowsOnErrors;
+use Saloon\Http\Request;
+use Saloon\Http\Response;
 
 trait ThrowsOnErrorsExceptNotFound
 {
     /**
      * Always throw if there is something wrong with the request.
      *
-     * @param SaloonRequest $request
+     * @param Request $request
      * @return void
-     * @throws \Sammyjo20\Saloon\Exceptions\SaloonInvalidConnectorException
+     * @throws \Saloon\Exceptions\SaloonInvalidConnectorException
      */
-    public function bootThrowsOnErrorsExceptNotFound(SaloonRequest $request): void
+    public function bootThrowsOnErrorsExceptNotFound(Request $request): void
     {
-        if ($this instanceof SaloonRequest && $this->traitExistsOnConnector(ThrowsOnErrorsExceptNotFound::class)) {
+        if ($this instanceof Request && $this->traitExistsOnConnector(ThrowsOnErrorsExceptNotFound::class)) {
             return;
         }
 
-        $this->addResponseInterceptor(function (SaloonRequest $request, SaloonResponse $response) {
+        $this->addResponseInterceptor(function (Request $request, Response $response) {
             if($response->status() !== 404) {
                 $response->throw();
             }
