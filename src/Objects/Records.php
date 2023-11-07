@@ -23,7 +23,7 @@ class Records
     {
         $records = [];
 
-        foreach($data as $entry) {
+        foreach ($data as $entry) {
             $records[] = Record::fromArray($entry);
         }
 

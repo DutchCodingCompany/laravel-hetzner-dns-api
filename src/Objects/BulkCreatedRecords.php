@@ -41,15 +41,15 @@ class BulkCreatedRecords
         $records = [];
         $valid_records = [];
 
-        foreach($data['invalid_records'] ?? [] as $entry) {
+        foreach ($data['invalid_records'] ?? [] as $entry) {
             $invalid_records[] = BaseRecord::fromArray($entry);
         }
 
-        foreach($data['records'] ?? [] as $entry) {
+        foreach ($data['records'] ?? [] as $entry) {
             $records[] = Record::fromArray($entry);
         }
 
-        foreach($data['valid_records'] ?? [] as $entry) {
+        foreach ($data['valid_records'] ?? [] as $entry) {
             $valid_records[] = BaseRecord::fromArray($entry);
         }
 

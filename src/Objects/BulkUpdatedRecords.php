@@ -32,11 +32,11 @@ class BulkUpdatedRecords
         $failed_records = [];
         $records = [];
 
-        foreach($data['failed_records'] ?? [] as $entry) {
+        foreach ($data['failed_records'] ?? [] as $entry) {
             $failed_records[] = BaseRecord::fromArray($entry);
         }
 
-        foreach($data['records'] ?? [] as $entry) {
+        foreach ($data['records'] ?? [] as $entry) {
             $records[] = Record::fromArray($entry);
         }
 

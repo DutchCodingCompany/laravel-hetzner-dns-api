@@ -19,7 +19,8 @@ class Record extends BaseRecord
         public CarbonInterface $modified,
         // Hetzner does not return the ttl for a record when it is not explicitly set and uses the zone default
         public ?int $ttl = null,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

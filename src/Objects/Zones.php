@@ -23,7 +23,7 @@ class Zones
     {
         $zones = [];
 
-        foreach($data as $entry) {
+        foreach ($data as $entry) {
             $zones[] = Zone::fromArray($entry);
         }
 

@@ -27,7 +27,8 @@ class Zone
         public readonly bool $is_secondary_dns,
         public readonly array $txt_verification,
         public readonly int $records_count,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {

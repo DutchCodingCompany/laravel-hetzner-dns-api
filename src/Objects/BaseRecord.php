@@ -11,7 +11,8 @@ class BaseRecord
         public string $name,
         public string $value,
         public string $zone_id,
-    ) {}
+    ) {
+    }
 
     public static function fromArray(array $data): self
     {
