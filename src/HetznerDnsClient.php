@@ -2,30 +2,23 @@
 
 namespace DutchCodingCompany\HetznerDnsClient;
 
-use DutchCodingCompany\HetznerDnsClient\Traits\ThrowsOnErrorsExceptNotFound;
-use Sammyjo20\Saloon\Http\SaloonConnector;
-use Sammyjo20\Saloon\Traits\Plugins\AcceptsJson;
+use DutchCodingCompany\HetznerDnsClient\Resources\RecordResource;
+use DutchCodingCompany\HetznerDnsClient\Resources\ZoneResource;
+use Saloon\Http\Connector;
+use Saloon\Traits\Plugins\AcceptsJson;
 
-/**
- * @method RequestCollections\ZoneCollection zones()
- * @method RequestCollections\RecordCollection records()
- */
-class HetznerDnsClient extends SaloonConnector
+class HetznerDnsClient extends Connector
 {
-    use AcceptsJson, ThrowsOnErrorsExceptNotFound;
+    use Traits\ThrowsOnErrorsExceptNotFound;
     use Traits\ResolvesApiToken;
-
-    protected array $requests = [
-        'zones' => RequestCollections\ZoneCollection::class,
-        'records' => RequestCollections\RecordCollection::class,
-    ];
+    use AcceptsJson;
 
     /**
      * The Base URL of the API.
      *
      * @return string
      */
-    public function defineBaseUrl(): string
+    public function resolveBaseUrl(): string
     {
         return 'https://dns.hetzner.com/api/v1';
     }
@@ -33,12 +26,32 @@ class HetznerDnsClient extends SaloonConnector
     /**
      * The headers that will be applied to every request.
      *
-     * @return string[]
+     * @return array<string, mixed>
      */
     public function defaultHeaders(): array
     {
         return [
             'Auth-API-Token' => self::getApiToken(),
         ];
+    }
+
+    /**
+     * Collection of methods for the zone resource.
+     *
+     * @return \DutchCodingCompany\HetznerDnsClient\Resources\ZoneResource
+     */
+    public function zones(): ZoneResource
+    {
+        return new ZoneResource($this);
+    }
+
+    /**
+     * Collection of methods for the record resource.
+     *
+     * @return \DutchCodingCompany\HetznerDnsClient\Resources\RecordResource
+     */
+    public function records(): RecordResource
+    {
+        return new RecordResource($this);
     }
 }

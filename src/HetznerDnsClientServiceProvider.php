@@ -4,11 +4,10 @@ namespace DutchCodingCompany\HetznerDnsClient;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Illuminate\Contracts\Container\Container;
 
 class HetznerDnsClientServiceProvider extends PackageServiceProvider
 {
-    public function packageRegistered()
+    public function packageRegistered(): void
     {
         $this->app->singleton(HetznerDnsClient::class);
         $this->app->alias(HetznerDnsClient::class, 'hetnzer-dns-client');

@@ -2,18 +2,17 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
-use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Http\Response;
+use Saloon\Traits\Body\HasJsonBody;
 
-class UpdateZone extends SaloonRequest
+class UpdateZone extends Request
 {
-    use HasJsonBody, CastsToDto;
+    use HasJsonBody;
+
+    protected Method $method = Method::PUT;
 
     public function __construct(
         protected string $zone_id,
@@ -24,16 +23,12 @@ class UpdateZone extends SaloonRequest
         $this->ttl ??= config('hetzner-dns.default_ttl');
     }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::PUT;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/zones/'.$this->zone_id;
     }
 
-    public function defaultData(): array
+    public function defaultBody(): array
     {
         return array_filter([
             'id' => $this->zone_id,
@@ -42,8 +37,8 @@ class UpdateZone extends SaloonRequest
         ]);
     }
 
-    protected function castToDto(SaloonResponse $response): Zone
+    public function createDtoFromResponse(Response $response): Zone
     {
-        return new Zone($response->json('zone'));
+        return Zone::fromArray($response->json('zone'));
     }
 }

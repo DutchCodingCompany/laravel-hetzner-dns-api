@@ -20,7 +20,7 @@ trait ResolvesApiToken
 
     public static function defaultApiTokenResolver(): Closure
     {
-        return fn() => config('hetzner-dns.api_token');
+        return fn () => config('hetzner-dns.api_token');
     }
 
     public static function getApiToken(): ?string

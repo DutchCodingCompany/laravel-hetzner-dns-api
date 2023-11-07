@@ -2,23 +2,19 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
 
-class DeleteZone extends SaloonRequest
+class DeleteZone extends Request
 {
+    protected Method $method = Method::DELETE;
+
     public function __construct(
         protected string $zone_id,
-    )
-    {}
+    ) {
+    }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::DELETE;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/zones/'.$this->zone_id;
     }

@@ -2,6 +2,7 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Facades;
 
+use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient as Client;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -11,6 +12,6 @@ class HetznerDnsClient extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'laravel-hetzner-dns-api';
+        return Client::class;
     }
 }

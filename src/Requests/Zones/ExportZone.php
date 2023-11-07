@@ -2,23 +2,19 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
 
-class ExportZone extends SaloonRequest
+class ExportZone extends Request
 {
+    protected Method $method = Method::GET;
+
     public function __construct(
         protected string $zone_id,
-    )
-    {}
+    ) {
+    }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::GET;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/zones/'.$this->zone_id.'/export';
     }

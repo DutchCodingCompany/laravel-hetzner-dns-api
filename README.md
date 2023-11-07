@@ -2,8 +2,6 @@
 # An unofficial PHP SDK for the Hetzner DNS API.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/dutchcodingcompany/laravel-hetzner-dns-api.svg?style=flat-square)](https://packagist.org/packages/dutchcodingcompany/laravel-hetzner-dns-api)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/dutchcodingcompany/laravel-hetzner-dns-api/run-tests?label=tests)](https://github.com/dutchcodingcompany/laravel-hetzner-dns-api/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/dutchcodingcompany/laravel-hetzner-dns-api/Check%20&%20fix%20styling?label=code%20style)](https://github.com/dutchcodingcompany/laravel-hetzner-dns-api/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/dutchcodingcompany/laravel-hetzner-dns-api.svg?style=flat-square)](https://packagist.org/packages/dutchcodingcompany/laravel-hetzner-dns-api)
 
 This PHP/Laravel client around the [Hetzner DNS API](https://dns.hetzner.com/api-docs) support:
@@ -21,24 +19,36 @@ You can install the package via composer:
 composer require dutchcodingcompany/laravel-hetzner-dns-api
 ```
 
+Set your hetzner dns api token in your .env file:
+```env
+HETZNER_DNS_API_TOKEN=hetzner-dns-token-here
+```
+
+## Configuration (optional)
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-hetzner-dns-api-config"
+php artisan vendor:publish --tag="hetzner-dns-api-config"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-    'api_token' => env('HETZNER_DNS_API_TOKEN')
-];
-```
+This is the contents of the published config file [can be found here](config/hetzner-dns.php).
 
 If you would like to store the API Token outside of the config (e.g. encrypted in the database), you can override the resolver in the `boot` method of the `AppServiceProvider`
 ```php
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
-HetznerDnsClient::resolveApiTokenUsing(fn () => 'your-token');
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        HetznerDnsClient::resolveApiTokenUsing(fn () => 'your-token');
+    }
+}
 ```
 
 ## Usage
@@ -49,17 +59,8 @@ $records = HetznerDnsClient::records()->all();
 ```
 
 ## ToDo
-- Caching
+- add caching
 - ...
-
-[//]: # (## Testing)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (composer test)
-
-[//]: # (```)
 
 ## Changelog
 

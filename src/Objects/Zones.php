@@ -2,13 +2,27 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Objects;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use DutchCodingCompany\HetznerDnsClient\Exceptions\InvalidArgumentException;
 
-class Zones extends DataTransferObject
+/**
+ * @property-read \DutchCodingCompany\HetznerDnsClient\Objects\Zone[]  $zones
+ */
+class Zones
 {
-    /** @var Zone[] */
-    #[CastWith(ArrayCaster::class, itemType: Zone::class)]
-    public array $zones;
+    public function __construct(
+        public readonly array $zones,
+    ) {
+        foreach ($zones as $zone) {
+            if (! ($zone instanceof Zone)) {
+                throw new InvalidArgumentException('All elements of $zones should be an instance of '.Zone::class);
+            }
+        }
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            array_map(Zone::fromArray(...), $data),
+        );
+    }
 }

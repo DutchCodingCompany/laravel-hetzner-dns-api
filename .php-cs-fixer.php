@@ -170,6 +170,9 @@ $rules = [
         ],
     ],
     'trim_array_spaces' => true,
+    'types_spaces' => [
+        'space' => 'single',
+    ],
     'unary_operator_spaces' => true,
     'visibility_required' => [
         'elements' => [
@@ -188,12 +191,9 @@ $rules = [
 
 $finder = Finder::create()
     ->in([
-        __DIR__.'/app',
-        __DIR__.'/config',
-        __DIR__.'/database',
-        __DIR__.'/resources',
-        __DIR__.'/routes',
-        __DIR__.'/tests',
+        __DIR__ . '/src',
+        __DIR__ . '/config',
+        __DIR__ . '/tests',
     ])
     ->name('*.php')
     ->notName('*.blade.php')

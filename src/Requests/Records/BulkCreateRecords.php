@@ -2,47 +2,42 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
-use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkCreatedRecords;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
-use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Http\Response;
+use Saloon\Traits\Body\HasJsonBody;
 
-class BulkCreateRecords extends SaloonRequest
+class BulkCreateRecords extends Request
 {
-    use HasJsonBody, CastsToDto;
+    use HasJsonBody;
 
     protected array $records;
+
+    protected Method $method = Method::POST;
 
     public function __construct(array $records)
     {
         $this->records = collect($records)
             ->map(function ($items) {
-                return (new CreateRecord(...$items))->getData();
+                return (new CreateRecord(...$items))->body()->get();
             })->filter()->toArray();
     }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::POST;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/records/bulk';
     }
 
-    public function defaultData(): array
+    public function defaultBody(): array
     {
         return array_filter([
             'records' => $this->records,
         ]);
     }
 
-    protected function castToDto(SaloonResponse $response): BulkCreatedRecords
+    public function createDtoFromResponse(Response $response): BulkCreatedRecords
     {
-        return new BulkCreatedRecords($response->json());
+        return BulkCreatedRecords::fromArray($response->json());
     }
 }

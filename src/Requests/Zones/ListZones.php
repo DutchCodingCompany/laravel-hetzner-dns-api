@@ -2,31 +2,24 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zones;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Http\Response;
 
-class ListZones extends SaloonRequest
+class ListZones extends Request
 {
-    use CastsToDto;
+    protected Method $method = Method::GET;
 
     public function __construct(
         protected ?string $name = null,
         protected ?int $page = null,
         protected ?int $per_page = null,
         protected ?string $search_name = null,
-    )
-    {}
+    ) {
+    }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::GET;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/zones';
     }
@@ -41,8 +34,8 @@ class ListZones extends SaloonRequest
         ]);
     }
 
-    protected function castToDto(SaloonResponse $response): Zones
+    public function createDtoFromResponse(Response $response): Zones
     {
-         return new Zones($response->json());
+        return Zones::fromArray($response->json('zones'));
     }
 }

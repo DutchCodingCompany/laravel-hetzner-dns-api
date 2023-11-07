@@ -2,34 +2,27 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Http\Response;
 
-class GetRecord extends SaloonRequest
+class GetRecord extends Request
 {
-    use CastsToDto;
+    protected Method $method = Method::GET;
 
     public function __construct(
         protected string $record_id,
-    )
-    {}
+    ) {
+    }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::GET;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/records/'.$this->record_id;
     }
 
-    protected function castToDto(SaloonResponse $response): Record
+    public function createDtoFromResponse(Response $response): Record
     {
-        return new Record($response->json('record'));
+        return Record::fromArray($response->json('record'));
     }
 }

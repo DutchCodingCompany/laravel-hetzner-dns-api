@@ -3,18 +3,17 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
-use Illuminate\Support\Arr;
-use Sammyjo20\Saloon\Constants\Saloon;
-use Sammyjo20\Saloon\Http\SaloonRequest;
-use Sammyjo20\Saloon\Http\SaloonResponse;
-use Sammyjo20\Saloon\Traits\Plugins\CastsToDto;
-use Sammyjo20\Saloon\Traits\Plugins\HasJsonBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Request;
+use Saloon\Http\Response;
+use Saloon\Traits\Body\HasJsonBody;
 
-class UpdateRecord extends SaloonRequest
+class UpdateRecord extends Request
 {
-    use HasJsonBody, CastsToDto;
+    use HasJsonBody;
+
+    protected Method $method = Method::PUT;
 
     public function __construct(
         protected string $record_id,
@@ -24,18 +23,15 @@ class UpdateRecord extends SaloonRequest
         protected string $name,
         protected string $value,
         protected ?int $ttl = null,
-    ) {}
+    ) {
+    }
 
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected ?string $method = Saloon::PUT;
-
-    public function defineEndpoint(): string
+    public function resolveEndpoint(): string
     {
         return '/records/'.$this->record_id;
     }
 
-    public function defaultData(): array
+    public function defaultBody(): array
     {
         return array_filter([
             'zone_id' => $this->zone_id,
@@ -46,8 +42,8 @@ class UpdateRecord extends SaloonRequest
         ]);
     }
 
-    protected function castToDto(SaloonResponse $response): Record
+    public function createDtoFromResponse(Response $response): Record
     {
-        return new Record($response->json('record'));
+        return Record::fromArray($response->json('record'));
     }
 }
