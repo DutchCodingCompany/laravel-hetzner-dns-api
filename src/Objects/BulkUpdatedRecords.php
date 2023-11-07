@@ -29,20 +29,9 @@ class BulkUpdatedRecords
 
     public static function fromArray(array $data): self
     {
-        $failed_records = [];
-        $records = [];
-
-        foreach ($data['failed_records'] ?? [] as $entry) {
-            $failed_records[] = BaseRecord::fromArray($entry);
-        }
-
-        foreach ($data['records'] ?? [] as $entry) {
-            $records[] = Record::fromArray($entry);
-        }
-
         return new self(
-            failed_records: $failed_records,
-            records: $records,
+            failed_records: array_map(BaseRecord::fromArray(...), $data['failed_records'] ?? []),
+            records: array_map(Record::fromArray(...), $data['records'] ?? []),
         );
     }
 }

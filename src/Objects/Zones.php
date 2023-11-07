@@ -21,12 +21,8 @@ class Zones
 
     public static function fromArray(array $data): self
     {
-        $zones = [];
-
-        foreach ($data as $entry) {
-            $zones[] = Zone::fromArray($entry);
-        }
-
-        return new self($zones);
+        return new self(
+            array_map(Zone::fromArray(...), $data),
+        );
     }
 }

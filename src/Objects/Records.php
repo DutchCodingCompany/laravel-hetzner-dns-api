@@ -21,12 +21,8 @@ class Records
 
     public static function fromArray(array $data): self
     {
-        $records = [];
-
-        foreach ($data as $entry) {
-            $records[] = Record::fromArray($entry);
-        }
-
-        return new self($records);
+        return new self(
+            array_map(Record::fromArray(...), $data),
+        );
     }
 }

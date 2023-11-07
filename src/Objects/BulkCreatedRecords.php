@@ -37,26 +37,10 @@ class BulkCreatedRecords
 
     public static function fromArray(array $data): self
     {
-        $invalid_records = [];
-        $records = [];
-        $valid_records = [];
-
-        foreach ($data['invalid_records'] ?? [] as $entry) {
-            $invalid_records[] = BaseRecord::fromArray($entry);
-        }
-
-        foreach ($data['records'] ?? [] as $entry) {
-            $records[] = Record::fromArray($entry);
-        }
-
-        foreach ($data['valid_records'] ?? [] as $entry) {
-            $valid_records[] = BaseRecord::fromArray($entry);
-        }
-
         return new self(
-            invalid_records: $invalid_records,
-            records: $records,
-            valid_records: $valid_records,
+            invalid_records: array_map(BaseRecord::fromArray(...), $data['invalid_records'] ?? []),
+            records: array_map(Record::fromArray(...), $data['records'] ?? []),
+            valid_records: array_map(BaseRecord::fromArray(...), $data['valid_records'] ?? []),
         );
     }
 }
