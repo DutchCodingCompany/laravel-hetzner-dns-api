@@ -26,7 +26,7 @@ class HetznerDnsClient extends Connector
     /**
      * The headers that will be applied to every request.
      *
-     * @return string[]
+     * @return array<string, mixed>
      */
     public function defaultHeaders(): array
     {

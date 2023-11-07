@@ -10,9 +10,9 @@ trait ThrowsOnErrorsExceptNotFound
     /**
      * Always throw if there is something wrong with the request, except if status code is 404.
      *
-     * @param \Saloon\Contracts\PendingRequest $request
+     * @param \Saloon\Contracts\PendingRequest $pendingRequest
      * @return void
-     * @throws \Saloon\Exceptions\SaloonInvalidConnectorException
+     * @throws \Saloon\Exceptions\SaloonException
      */
     public static function bootThrowsOnErrorsExceptNotFound(PendingRequest $pendingRequest): void
     {

@@ -5,6 +5,7 @@ namespace DutchCodingCompany\HetznerDnsClient\Objects;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
+use InvalidArgumentException;
 
 class Record extends BaseRecord
 {
@@ -28,8 +29,8 @@ class Record extends BaseRecord
             value: $data['value'],
             zone_id: $data['zone_id'],
             id: $data['id'],
-            created: Carbon::make($data['created']),
-            modified: Carbon::make($data['modified']),
+            created: Carbon::make($data['created']) ?? throw new InvalidArgumentException('Attribute "created" is required on a record.'),
+            modified: Carbon::make($data['modified']) ?? throw new InvalidArgumentException('Attribute "created" is required on a record.'),
             ttl: $data['ttl'] ?? null,
         );
     }

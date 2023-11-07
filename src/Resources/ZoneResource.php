@@ -32,7 +32,6 @@ class ZoneResource extends Resource
     {
         $zones = $this->all(name: $name);
 
-        /** @var Zone $zone */
         return collect($zones?->zones)->where('name', $name)->first();
     }
 

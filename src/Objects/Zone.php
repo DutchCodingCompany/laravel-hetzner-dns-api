@@ -2,8 +2,9 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Objects;
 
-use Carbon\CarbonInterface;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use InvalidArgumentException;
 
 class Zone
 {
@@ -38,9 +39,9 @@ class Zone
             legacy_dns_host: $data['legacy_dns_host'] ?? null,
             legacy_ns: $data['legacy_ns'] ?? null,
             ns: $data['ns'],
-            created: Carbon::make($data['created']),
+            created: Carbon::make($data['created']) ?? throw new InvalidArgumentException('Attribute "created" is required on a zone.'),
             verified: Carbon::make($data['verified'] ?? null),
-            modified: Carbon::make($data['modified']),
+            modified: Carbon::make($data['modified']) ?? throw new InvalidArgumentException('Attribute "created" is required on a zone.'),
             owner: $data['owner'],
             permission: $data['permission'],
             zone_type: $data['zone_type'],

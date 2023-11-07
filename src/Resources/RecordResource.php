@@ -27,7 +27,7 @@ class RecordResource extends Resource
         return $this->connector->send(new CreateRecord(zone_id: $zone_id, type: $type, name: $name, value: $value, ttl: $ttl))->dto();
     }
 
-    public function createNameserverRecords(string $zone_id)
+    public function createNameserverRecords(string $zone_id): Records
     {
         $records = [];
         $nameservers = array_filter(config('hetzner-dns.nameservers', []));
@@ -41,7 +41,7 @@ class RecordResource extends Resource
     public function createIfNotExists(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
         $records = $this->all(zone_id: $zone_id);
-        $record = collect($records->records)
+        $record = collect($records?->records)
             ->firstWhere(fn (Record $record) => $record->name === $name && $record->type === $type);
 
         if (! is_null($record)) {
@@ -54,7 +54,7 @@ class RecordResource extends Resource
     public function createOrUpdate(string $zone_id, RecordType $type, string $name, string $value, ?int $ttl = null): Record
     {
         $records = $this->all(zone_id: $zone_id);
-        $record = collect($records->records)
+        $record = collect($records?->records)
             ->firstWhere(fn (Record $record) => $record->name === $name && $record->type === $type);
 
         if (! is_null($record)) {
@@ -86,7 +86,7 @@ class RecordResource extends Resource
     public function deleteIfExists(string $zone_id, RecordType $type, string $name): bool
     {
         $records = $this->all(zone_id: $zone_id);
-        $record = collect($records->records)
+        $record = collect($records?->records)
             ->firstWhere(fn (Record $record) => $record->name === $name && $record->type === $type);
 
         if (! is_null($record)) {
