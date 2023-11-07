@@ -14,7 +14,6 @@ class ExportZone extends Request
     ) {
     }
 
-
     public function resolveEndpoint(): string
     {
         return '/zones/'.$this->zone_id.'/export';
