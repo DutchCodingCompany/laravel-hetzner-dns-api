@@ -2,7 +2,6 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,6 +12,8 @@ class UpdateZone extends Request
 {
     use HasJsonBody;
 
+    protected Method $method = Method::PUT;
+
     public function __construct(
         protected string $zone_id,
 
@@ -21,10 +22,6 @@ class UpdateZone extends Request
     ) {
         $this->ttl ??= config('hetzner-dns.default_ttl');
     }
-
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected Method $method = Method::PUT;
 
     public function resolveEndpoint(): string
     {

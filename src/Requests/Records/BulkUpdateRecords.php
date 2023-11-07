@@ -2,7 +2,6 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkUpdatedRecords;
 use Illuminate\Support\Arr;
 use Saloon\Enums\Method;
@@ -16,6 +15,8 @@ class BulkUpdateRecords extends Request
 
     protected array $records;
 
+    protected Method $method = Method::PUT;
+
     public function __construct(array $records)
     {
         $this->records = collect($records)
@@ -26,10 +27,6 @@ class BulkUpdateRecords extends Request
                 );
             })->filter()->toArray();
     }
-
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected Method $method = Method::PUT;
 
     public function resolveEndpoint(): string
     {

@@ -2,7 +2,6 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zones;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -10,6 +9,8 @@ use Saloon\Http\Response;
 
 class ListZones extends Request
 {
+    protected Method $method = Method::GET;
+
     public function __construct(
         protected ?string $name = null,
         protected ?int $page = null,
@@ -17,10 +18,6 @@ class ListZones extends Request
         protected ?string $search_name = null,
     ) {
     }
-
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
     {

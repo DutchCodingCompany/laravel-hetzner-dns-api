@@ -2,7 +2,6 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Records;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -10,16 +9,14 @@ use Saloon\Http\Response;
 
 class ListRecords extends Request
 {
+    protected Method $method = Method::GET;
+
     public function __construct(
         protected ?int $page = null,
         protected ?int $per_page = null,
         protected ?string $zone_id = null,
     ) {
     }
-
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
     {

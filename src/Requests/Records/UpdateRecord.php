@@ -3,7 +3,6 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -13,6 +12,8 @@ use Saloon\Traits\Body\HasJsonBody;
 class UpdateRecord extends Request
 {
     use HasJsonBody;
+
+    protected Method $method = Method::PUT;
 
     public function __construct(
         protected string $record_id,
@@ -24,10 +25,6 @@ class UpdateRecord extends Request
         protected ?int $ttl = null,
     ) {
     }
-
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected Method $method = Method::PUT;
 
     public function resolveEndpoint(): string
     {

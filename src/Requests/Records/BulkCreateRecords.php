@@ -2,7 +2,6 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkCreatedRecords;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -15,6 +14,8 @@ class BulkCreateRecords extends Request
 
     protected array $records;
 
+    protected Method $method = Method::POST;
+
     public function __construct(array $records)
     {
         $this->records = collect($records)
@@ -22,10 +23,6 @@ class BulkCreateRecords extends Request
                 return (new CreateRecord(...$items))->body()->get();
             })->filter()->toArray();
     }
-
-    protected ?string $connector = HetznerDnsClient::class;
-
-    protected Method $method = Method::POST;
 
     public function resolveEndpoint(): string
     {
