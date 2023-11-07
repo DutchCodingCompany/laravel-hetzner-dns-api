@@ -31,7 +31,7 @@ class Record extends BaseRecord
             zone_id: $data['zone_id'],
             id: $data['id'],
             created: Carbon::make($data['created']) ?? throw new InvalidArgumentException('Attribute "created" is required on a record.'),
-            modified: Carbon::make($data['modified']) ?? throw new InvalidArgumentException('Attribute "created" is required on a record.'),
+            modified: Carbon::make($data['modified']) ?? throw new InvalidArgumentException('Attribute "modified" is required on a record.'),
             ttl: $data['ttl'] ?? null,
         );
     }

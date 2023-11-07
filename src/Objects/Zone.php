@@ -42,7 +42,7 @@ class Zone
             ns: $data['ns'],
             created: Carbon::make($data['created']) ?? throw new InvalidArgumentException('Attribute "created" is required on a zone.'),
             verified: Carbon::make($data['verified'] ?? null),
-            modified: Carbon::make($data['modified']) ?? throw new InvalidArgumentException('Attribute "created" is required on a zone.'),
+            modified: Carbon::make($data['modified']) ?? throw new InvalidArgumentException('Attribute "modified" is required on a zone.'),
             owner: $data['owner'],
             permission: $data['permission'],
             zone_type: $data['zone_type'],
