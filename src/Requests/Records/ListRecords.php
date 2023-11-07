@@ -37,6 +37,6 @@ class ListRecords extends Request
 
     public function createDtoFromResponse(Response $response): Records
     {
-        return new Records($response->json());
+        return Records::fromArray($response->json('records'));
     }
 }

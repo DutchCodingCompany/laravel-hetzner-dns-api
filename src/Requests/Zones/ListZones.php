@@ -39,6 +39,6 @@ class ListZones extends Request
 
     public function createDtoFromResponse(Response $response): Zones
     {
-        return Zones::fromArray($response->json());
+        return Zones::fromArray($response->json('zones'));
     }
 }

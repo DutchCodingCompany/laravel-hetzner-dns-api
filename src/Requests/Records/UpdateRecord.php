@@ -47,6 +47,6 @@ class UpdateRecord extends Request
 
     public function createDtoFromResponse(Response $response): Record
     {
-        return new Record($response->json('record'));
+        return Record::fromArray($response->json('record'));
     }
 }
