@@ -8,5 +8,6 @@ abstract class Resource
 {
     final public function __construct(
         readonly protected Connector $connector,
-    ) {}
+    ) {
+    }
 }

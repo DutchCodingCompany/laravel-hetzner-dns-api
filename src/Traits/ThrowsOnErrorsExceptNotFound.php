@@ -2,8 +2,8 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Traits;
 
-use Saloon\Contracts\Response;
 use Saloon\Contracts\PendingRequest;
+use Saloon\Contracts\Response;
 
 trait ThrowsOnErrorsExceptNotFound
 {

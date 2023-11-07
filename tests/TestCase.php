@@ -2,9 +2,9 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Tests;
 
+use DutchCodingCompany\HetznerDnsClient\HetznerDnsClientServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use DutchCodingCompany\HetznerDnsClient\HetznerDnsClientServiceProvider;
 
 class TestCase extends Orchestra
 {

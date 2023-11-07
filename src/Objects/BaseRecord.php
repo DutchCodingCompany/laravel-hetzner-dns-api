@@ -14,7 +14,10 @@ use Spatie\DataTransferObject\DataTransferObject;
 class BaseRecord extends DataTransferObject
 {
     public RecordType $type;
+
     public string $name;
+
     public string $value;
+
     public string $zone_id;
 }

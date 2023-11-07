@@ -4,19 +4,19 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
+use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Traits\Plugins\CastsToDto;
-use Saloon\Traits\Body\HasJsonBody;;
+use Saloon\Traits\Body\HasJsonBody;
 
 class CreateZone extends Request
 {
-    use HasJsonBody, CastsToDto;
+    use HasJsonBody;
 
     public function __construct(
         protected string $name,
         protected ?int $ttl = null,
-    ){
+    ) {
         $this->ttl ??= config('hetzner-dns.default_ttl');
     }
 
@@ -37,7 +37,7 @@ class CreateZone extends Request
         ]);
     }
 
-    protected function castToDto(Response $response): Zone
+    public function createDtoFromResponse(Response $response): Zone
     {
         return new Zone($response->json('zone'));
     }

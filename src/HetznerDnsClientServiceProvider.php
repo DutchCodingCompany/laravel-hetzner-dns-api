@@ -2,9 +2,9 @@
 
 namespace DutchCodingCompany\HetznerDnsClient;
 
+use Illuminate\Contracts\Container\Container;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Illuminate\Contracts\Container\Container;
 
 class HetznerDnsClientServiceProvider extends PackageServiceProvider
 {

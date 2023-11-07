@@ -4,20 +4,18 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Records;
+use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Traits\Plugins\CastsToDto;
 
 class ListRecords extends Request
 {
-    use CastsToDto;
-
     public function __construct(
         protected ?int $page = null,
         protected ?int $per_page = null,
         protected ?string $zone_id = null,
-    )
-    {}
+    ) {
+    }
 
     protected ?string $connector = HetznerDnsClient::class;
 
@@ -37,7 +35,7 @@ class ListRecords extends Request
         ]);
     }
 
-    protected function castToDto(Response $response): Records
+    public function createDtoFromResponse(Response $response): Records
     {
         return new Records($response->json());
     }

@@ -13,7 +13,7 @@ use DutchCodingCompany\HetznerDnsClient\Requests\Zones\UpdateZone;
 
 class ZoneResource extends Resource
 {
-    public function all(string $name = null,?int $per_page = null, ?string $search_name = null): ?Zones
+    public function all(string $name = null, ?int $per_page = null, ?string $search_name = null): ?Zones
     {
         return $this->connector->send(new ListZones(name: $name, per_page: $per_page, search_name: $search_name))->dto();
     }

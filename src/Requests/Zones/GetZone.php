@@ -4,18 +4,16 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
+use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Traits\Plugins\CastsToDto;
 
 class GetZone extends Request
 {
-    use CastsToDto;
-
     public function __construct(
         protected string $zone_id,
-    )
-    {}
+    ) {
+    }
 
     protected ?string $connector = HetznerDnsClient::class;
 
@@ -26,7 +24,7 @@ class GetZone extends Request
         return '/zones/'.$this->zone_id;
     }
 
-    protected function castToDto(Response $response): Zone
+    public function createDtoFromResponse(Response $response): Zone
     {
         return new Zone($response->json('zone'));
     }
