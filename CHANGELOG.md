@@ -2,7 +2,7 @@
 
 All notable changes to `laravel-hetzner-dns-api` will be documented in this file.
 
-## 1.0.0 - 2023-??-??
+## 1.0.0 - 2023-11-07
 
 ### Changes
 - renamed `\DutchCodingCompany\HetznerDnsClient\RequestCollections\RecordCollection` to `\DutchCodingCompany\HetznerDnsClient\Resources\RecordResource`
