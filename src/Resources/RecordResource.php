@@ -62,7 +62,6 @@ class RecordResource extends Resource
             if ($value !== $record->value || $ttl !== $record->ttl) {
                 $record = $this->update($record->id, $zone_id, $type, $name, $value, $ttl);
             }
-
             return $record;
         }
 

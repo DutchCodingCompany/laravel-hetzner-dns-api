@@ -4,31 +4,29 @@ namespace DutchCodingCompany\HetznerDnsClient\Objects;
 
 use InvalidArgumentException;
 
+/**
+ * @property-read \DutchCodingCompany\HetznerDnsClient\Objects\Zone[]  $zones
+ */
 class Zones
 {
-    /** @var \DutchCodingCompany\HetznerDnsClient\Objects\Zone[] */
-    readonly public array $zones;
-
-    final public function __construct(
-        array $zones = [],
+    public function __construct(
+        public readonly array $zones,
     ) {
         foreach ($zones as $zone) {
             if (! ($zone instanceof Zone)) {
                 throw new InvalidArgumentException('All elements of $zones should be an instance of '.Zone::class);
             }
         }
-
-        $this->zones = $zones;
     }
 
-    public static function fromJsonArray(array $data): static
+    public static function fromArray(array $data): self
     {
         $zones = [];
 
         foreach($data as $entry) {
-            $zones[] = Zone::fromJsonArray($entry);
+            $zones[] = Zone::fromArray($entry);
         }
 
-        return new static($zones);
+        return new self($zones);
     }
 }

@@ -7,30 +7,30 @@ use Carbon\Carbon;
 
 class Zone
 {
-    final public function __construct(
-        readonly public string $id,
-        readonly public string $name,
-        readonly public int $ttl,
-        readonly public ?string $registrar,
-        readonly public ?string $legacy_dns_host,
-        readonly public ?array $legacy_ns,
-        readonly public array $ns,
-        readonly public CarbonInterface $created,
-        readonly public ?CarbonInterface $verified,
-        readonly public CarbonInterface $modified,
-        readonly public string $owner,
-        readonly public string $permission,
-        readonly public array $zone_type,
-        readonly public string $status,
-        readonly public bool $paused,
-        readonly public bool $is_secondary_dns,
-        readonly public array $txt_verification,
-        readonly public int $records_count,
+    public function __construct(
+        public readonly string $id,
+        public readonly string $name,
+        public readonly int $ttl,
+        public readonly ?string $registrar,
+        public readonly ?string $legacy_dns_host,
+        public readonly ?array $legacy_ns,
+        public readonly array $ns,
+        public readonly CarbonInterface $created,
+        public readonly ?CarbonInterface $verified,
+        public readonly CarbonInterface $modified,
+        public readonly string $owner,
+        public readonly string $permission,
+        public readonly array $zone_type,
+        public readonly string $status,
+        public readonly bool $paused,
+        public readonly bool $is_secondary_dns,
+        public readonly array $txt_verification,
+        public readonly int $records_count,
     ) {}
 
-    public static function fromJsonArray(array $data): static
+    public static function fromArray(array $data): self
     {
-        return new static(
+        return new self(
             id: $data['id'],
             name: $data['name'],
             ttl: $data['ttl'],
@@ -38,9 +38,9 @@ class Zone
             legacy_dns_host: $data['legacy_dns_host'] ?? null,
             legacy_ns: $data['legacy_ns'] ?? null,
             ns: $data['ns'],
-            created: Carbon::parse($data['created']),
+            created: Carbon::make($data['created']),
             verified: Carbon::make($data['verified'] ?? null),
-            modified: Carbon::parse($data['modified']),
+            modified: Carbon::make($data['modified']),
             owner: $data['owner'],
             permission: $data['permission'],
             zone_type: $data['zone_type'],

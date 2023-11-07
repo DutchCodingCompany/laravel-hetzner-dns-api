@@ -41,6 +41,6 @@ class BulkCreateRecords extends Request
 
     public function createDtoFromResponse(Response $response): BulkCreatedRecords
     {
-        return new BulkCreatedRecords($response->json());
+        return BulkCreatedRecords::fromArray($response->json());
     }
 }

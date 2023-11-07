@@ -45,6 +45,6 @@ class BulkUpdateRecords extends Request
 
     public function createDtoFromResponse(Response $response): BulkUpdatedRecords
     {
-        return new BulkUpdatedRecords($response->json());
+        return BulkUpdatedRecords::fromArray($response->json());
     }
 }

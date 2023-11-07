@@ -26,6 +26,6 @@ class GetZone extends Request
 
     public function createDtoFromResponse(Response $response): Zone
     {
-        return new Zone($response->json('zone'));
+        return Zone::fromArray($response->json('zone'));
     }
 }

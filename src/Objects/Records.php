@@ -2,13 +2,31 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Objects;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use InvalidArgumentException;
 
-class Records extends DataTransferObject
+/**
+ * @property-read \DutchCodingCompany\HetznerDnsClient\Objects\Record[]  $records
+ */
+class Records
 {
-    /** @var Record[] */
-    #[CastWith(ArrayCaster::class, itemType: Record::class)]
-    public array $records;
+    public function __construct(
+        public readonly array $records,
+    ) {
+        foreach ($records as $record) {
+            if (! ($record instanceof Record)) {
+                throw new InvalidArgumentException('All elements of $records should be an instance of '.Record::class);
+            }
+        }
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $records = [];
+
+        foreach($data as $entry) {
+            $records[] = Record::fromArray($entry);
+        }
+
+        return new self($records);
+    }
 }
