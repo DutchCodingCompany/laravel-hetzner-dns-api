@@ -2,23 +2,16 @@
 
 namespace DutchCodingCompany\HetznerDnsClient;
 
-use DutchCodingCompany\HetznerDnsClient\Traits\ThrowsOnErrorsExceptNotFound;
+use DutchCodingCompany\HetznerDnsClient\Resources\RecordResource;
+use DutchCodingCompany\HetznerDnsClient\Resources\ZoneResource;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;
 
-/**
- * @method RequestCollections\ZoneCollection zones()
- * @method RequestCollections\RecordCollection records()
- */
 class HetznerDnsClient extends Connector
 {
-    use AcceptsJson, ThrowsOnErrorsExceptNotFound;
+    use Traits\ThrowsOnErrorsExceptNotFound;
     use Traits\ResolvesApiToken;
-
-    protected array $requests = [
-        'zones' => RequestCollections\ZoneCollection::class,
-        'records' => RequestCollections\RecordCollection::class,
-    ];
+    use AcceptsJson;
 
     /**
      * The Base URL of the API.
@@ -40,5 +33,25 @@ class HetznerDnsClient extends Connector
         return [
             'Auth-API-Token' => self::getApiToken(),
         ];
+    }
+
+    /**
+     * Collection of methods for the zone resource.
+     *
+     * @return \DutchCodingCompany\HetznerDnsClient\Resources\ZoneResource
+     */
+    public function zones(): ZoneResource
+    {
+        return new ZoneResource($this);
+    }
+
+    /**
+     * Collection of methods for the record resource.
+     *
+     * @return \DutchCodingCompany\HetznerDnsClient\Resources\RecordResource
+     */
+    public function records(): RecordResource
+    {
+        return new RecordResource($this);
     }
 }
