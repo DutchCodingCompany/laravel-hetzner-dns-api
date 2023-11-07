@@ -2,7 +2,7 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Resources;
 
-use Saloon\Contracts\Connector;
+use Saloon\Http\Connector;
 
 abstract class Resource
 {

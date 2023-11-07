@@ -2,15 +2,15 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Traits;
 
-use Saloon\Contracts\PendingRequest;
-use Saloon\Contracts\Response;
+use Saloon\Http\PendingRequest;
+use Saloon\Http\Response;
 
 trait ThrowsOnErrorsExceptNotFound
 {
     /**
      * Always throw if there is something wrong with the request, except if status code is 404.
      *
-     * @param \Saloon\Contracts\PendingRequest $pendingRequest
+     * @param \Saloon\Http\PendingRequest $pendingRequest
      * @return void
      * @throws \Saloon\Exceptions\SaloonException
      */

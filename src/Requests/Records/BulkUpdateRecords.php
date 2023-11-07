@@ -5,7 +5,7 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 use DutchCodingCompany\HetznerDnsClient\HetznerDnsClient;
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkUpdatedRecords;
 use Illuminate\Support\Arr;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
