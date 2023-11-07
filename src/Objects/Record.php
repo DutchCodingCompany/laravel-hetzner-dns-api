@@ -5,7 +5,7 @@ namespace DutchCodingCompany\HetznerDnsClient\Objects;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
-use InvalidArgumentException;
+use DutchCodingCompany\HetznerDnsClient\Exceptions\InvalidArgumentException;
 
 class Record extends BaseRecord
 {

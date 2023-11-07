@@ -2,7 +2,7 @@
 
 namespace DutchCodingCompany\HetznerDnsClient\Objects;
 
-use InvalidArgumentException;
+use DutchCodingCompany\HetznerDnsClient\Exceptions\InvalidArgumentException;
 
 /**
  * @property-read \DutchCodingCompany\HetznerDnsClient\Objects\Record[]  $records

@@ -4,7 +4,7 @@ namespace DutchCodingCompany\HetznerDnsClient\Objects;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use InvalidArgumentException;
+use DutchCodingCompany\HetznerDnsClient\Exceptions\InvalidArgumentException;
 
 class Zone
 {
