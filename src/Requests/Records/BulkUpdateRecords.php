@@ -4,12 +4,13 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkUpdatedRecords;
 use Illuminate\Support\Arr;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class BulkUpdateRecords extends Request
+class BulkUpdateRecords extends Request implements HasBody
 {
     use HasJsonBody;
 

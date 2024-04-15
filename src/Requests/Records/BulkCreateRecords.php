@@ -3,12 +3,13 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Objects\BulkCreatedRecords;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class BulkCreateRecords extends Request
+class BulkCreateRecords extends Request implements HasBody
 {
     use HasJsonBody;
 
