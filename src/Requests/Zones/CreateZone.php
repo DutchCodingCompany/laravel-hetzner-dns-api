@@ -3,12 +3,13 @@
 namespace DutchCodingCompany\HetznerDnsClient\Requests\Zones;
 
 use DutchCodingCompany\HetznerDnsClient\Objects\Zone;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class CreateZone extends Request
+class CreateZone extends Request implements HasBody
 {
     use HasJsonBody;
 

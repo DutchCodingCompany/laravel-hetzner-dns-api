@@ -4,12 +4,13 @@ namespace DutchCodingCompany\HetznerDnsClient\Requests\Records;
 
 use DutchCodingCompany\HetznerDnsClient\Enums\RecordType;
 use DutchCodingCompany\HetznerDnsClient\Objects\Record;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
-class CreateRecord extends Request
+class CreateRecord extends Request implements HasBody
 {
     use HasJsonBody;
 
