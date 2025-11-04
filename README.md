@@ -1,4 +1,7 @@
 
+# ⚠️ Deprecation
+[Hetzner migrated the DNS api to Hetzner Cloud](https://docs.hetzner.com/networking/dns/migration-to-hetzner-console/process/), therefore this sdk is now obsolete. This repository is left for archival purposes only.
+
 # An unofficial PHP SDK for the Hetzner DNS API.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/dutchcodingcompany/laravel-hetzner-dns-api.svg?style=flat-square)](https://packagist.org/packages/dutchcodingcompany/laravel-hetzner-dns-api)
